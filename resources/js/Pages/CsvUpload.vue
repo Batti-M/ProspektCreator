@@ -7,9 +7,9 @@
         </div>
     </form>
     <p class="text-green-500 p-2 rounded">{{ message }}</p>
-    <Link v-if="page.props.csvData.length > 0" href="/prospektCreator" type="button" class="bg-blue-400 text-white px-5 py-2 rounded-xl"> Create your brochure now!</Link>
-    <!-- <ProductsTable v-if="headers && rows" :headers="headers" :rows="rows" /> -->
-    <ProductsTable v-if="headers && rows" :headers="headers" :rows="rows"></ProductsTable>
+    <Link v-if="headers.length > 0" href="/prospektCreator" type="button" class="bg-blue-400 text-white px-5 py-2 rounded-xl"> Create your brochure now!</Link>
+    
+    <ProductsTable v-if="headers && rows" :headers="headers" :rows="rows" />
 </template>
 
 <script setup>
