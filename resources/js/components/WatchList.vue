@@ -6,26 +6,29 @@
             <img class="w-12 h-12" :src="`storage/products/${item.image}`">
             <p> {{item.price }}€</p>
             
+            <button  @click="removeFromWatchlist(item)" class="bg-red-500 hover:bg-red-700 text-white font text-xs py-2 px-4 flex-grow-0 rounded">
+                   Delete
+                  </button>
         </div>
     </div>
 </template>
 
 <script setup>
 import axios from 'axios';
-import  { onMounted , ref} from 'vue';
+import  { onMounted , ref , watch} from 'vue';
 import { usePage } from '@inertiajs/vue3';  
 
 defineProps({
-    watchListData: {
+    watchlistData: {
         type: Array,
     },
 });
 
 const page = usePage();
-const watchlist = ref([])
+let watchlist = ref(page.props.watchListData);
 
 onMounted(() => {
-    axios.get('api/watchlist')
+    axios.get('api/watchlistData')
         .then(response => {
             console.log(response)
             watchlist.value = response.data;
@@ -35,5 +38,22 @@ onMounted(() => {
             console.log(error);
         });
 })
+           
+
+watch(watchlist.value, (newValue, oldValue) => {
+    watchlist.value = newValue;
+})
+
+const removeFromWatchlist = (item) => {
+
+    axios.delete(`api/watchlistData/${item.id}`)
+        .then(response => {
+            console.log(response)
+            watchlist.value = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 </script>
 

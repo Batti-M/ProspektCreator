@@ -1,7 +1,7 @@
 <template>
     <ProspektGrid :csvData="csvData" />
     <ProductList :csvData="csvData" />
-    <Watchlist :watchListData="watchListData"/>
+    <Watchlist :watchlistData="watchlistData"/>
 </template>
 
 <script setup>

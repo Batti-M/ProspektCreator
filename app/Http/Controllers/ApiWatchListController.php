@@ -12,4 +12,9 @@ class ApiWatchListController extends Controller
         return WatchList::all();
     }
 
+    public function destroy($id)
+    {
+        WatchList::destroy($id);
+        return response()->json(['message' => 'Product deleted from watchlist']);
+    }
 }

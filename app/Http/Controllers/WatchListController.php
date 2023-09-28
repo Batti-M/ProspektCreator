@@ -12,6 +12,7 @@ class WatchListController extends Controller
      */
     public function index()
     {
+        dd(session('watchListData', []));
         return WatchList::all();
     }
 

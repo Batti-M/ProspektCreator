@@ -6,11 +6,15 @@
         class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-6 h-auto" @start="drag = true"
         @end="drag = false">
         <template #item="{ element, index }">
-          <div @click="addToWatchList(element)" :itemKey="element.id"
+          <div :itemKey="element.id"
             :class="index === 0 ? ' col-span-2 bg-white p-6 rounded-lg shadow-md mt-10 flex flex-col justify-between bg-yellow-300' : 'bg-yellow-100 max-w-sm bg-white p-6 rounded-lg shadow-md mt-10 flex flex-col justify-between'">
-
-            <img :src="`storage/products/${element.image_url}`" alt="" class="w-36 h-36 object-cover"
+            <div class="flex">
+              <img :src="`storage/products/${element.image_url}`" alt="" class="w-36 h-36 object-cover"
               :class="index === 0 && 'w-full h-50 object-fit'">
+              <button  @click="addToWatchList(element)" class="bg-blue-500 hover:bg-blue-700 text-white font text-xs py-2 px-4 flex-grow-0 rounded">
+                Add to Watchlist
+              </button>
+            </div>
             <h2 class="text-xl font-semibold mb-2">{{ element.Produktname }}</h2>
             <p class="text-xs text-gray-600 mb-4">Angebot bis zum {{ element.Angebotsdatum }}</p>
             <p class="text-gray-600 mb-4">This is a short description of the product. It provides some insights into what
