@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
             'csvData' => function () {
                 return session('csvData', []);
             },
-            'watchListData' => function () {
-                return session('watchListData', []);
+            'testData' => function () {
+                return session('testData', []);
             },
         ]);
     }

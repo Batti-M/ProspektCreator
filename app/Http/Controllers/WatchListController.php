@@ -12,7 +12,6 @@ class WatchListController extends Controller
      */
     public function index()
     {
-        dd(session('watchListData', []));
         return WatchList::all();
     }
 
@@ -29,7 +28,7 @@ class WatchListController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        
         $validated = $request->validate([
             'id' => 'required|numeric|digits_between:1,5',
             'image' => 'required|string|max:255',
@@ -45,7 +44,7 @@ class WatchListController extends Controller
                 'price' => $validated['price'],
             ]
         );
-        session(['watchListData' => WatchList::all()]);
+        
         session()->flash('message', 'Product added to watchlist');
         return redirect()->back();
     }

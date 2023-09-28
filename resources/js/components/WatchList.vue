@@ -1,7 +1,7 @@
 <template>
     <div class="flex">
 
-        <div v-for="item in watchlist" :key="item.id" class="flex flex-col border p-4">
+        <div v-for="item in page.props.watchlistData" :key="item.id" class="flex flex-col border p-4">
             <heading class="font-bold">{{ item.name }}</heading>
             <img class="w-12 h-12" :src="`storage/products/${item.image}`">
             <p> {{item.price }}€</p>
@@ -25,9 +25,9 @@ defineProps({
 });
 
 const page = usePage();
-let watchlist = ref(page.props.watchListData);
+let watchlist = ref(page.props.watchlistData);
 
-onMounted(() => {
+const fetchWatchlist = () => {
     axios.get('api/watchlistData')
         .then(response => {
             console.log(response)
@@ -37,6 +37,9 @@ onMounted(() => {
         .catch(error => {
             console.log(error);
         });
+}
+onMounted(() => {
+    fetchWatchlist();
 })
            
 
@@ -48,8 +51,7 @@ const removeFromWatchlist = (item) => {
 
     axios.delete(`api/watchlistData/${item.id}`)
         .then(response => {
-            console.log(response)
-            watchlist.value = response.data;
+            fetchWatchlist();
         })
         .catch(error => {
             console.log(error);

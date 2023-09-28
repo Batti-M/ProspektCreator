@@ -42,7 +42,7 @@ class CsvController extends Controller
             
             return asset('storage/products/' . $imageFilename);
         });
-         session(['csvData' => CsvData::all()]);
+        
         
         return Inertia::render('Home', [
             'csvData' => CsvData::all(),

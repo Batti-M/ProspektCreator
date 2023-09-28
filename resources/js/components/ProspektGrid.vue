@@ -6,20 +6,19 @@
         class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-6 h-auto" @start="drag = true"
         @end="drag = false">
         <template #item="{ element, index }">
-          <div :itemKey="element.id"
-            :class="index === 0 ? ' col-span-2 bg-white p-6 rounded-lg shadow-md mt-10 flex flex-col justify-between bg-yellow-300' : 'bg-yellow-100 max-w-sm bg-white p-6 rounded-lg shadow-md mt-10 flex flex-col justify-between'">
-            <div class="flex">
+          <div :itemKey="element.id" class="p-6 rounded-lg shadow-md mt-10 flex flex-col justify-between"
+            :class="index === 0 ? ' col-span-2 bg-yellow-300' : 'bg-yellow-100 col-span-1'">
+            <div class="flex justify-between">
               <img :src="`storage/products/${element.image_url}`" alt="" class="w-36 h-36 object-cover"
               :class="index === 0 && 'w-full h-50 object-fit'">
-              <button  @click="addToWatchList(element)" class="bg-blue-500 hover:bg-blue-700 text-white font text-xs py-2 px-4 flex-grow-0 rounded">
+              <button  @click="addToWatchList(element)" class="bg-blue-500 hover:bg-blue-700 text-white font text-xs py-2 px-4 flex-grow-0 h-12 rounded">
                 Add to Watchlist
               </button>
             </div>
-            <h2 class="text-xl font-semibold mb-2">{{ element.Produktname }}</h2>
+            <h2 class="text-xl font-semibold mb-2 underline">{{ element.Produktname }}</h2>
             <p class="text-xs text-gray-600 mb-4">Angebot bis zum {{ element.Angebotsdatum }}</p>
-            <p class="text-gray-600 mb-4">This is a short description of the product. It provides some insights into what
-              the product offers.</p>
-            <div class="flex items-end justify-end gap-10">
+            <p class="text-gray-600 mb-4"> {{ element.Produktbeschreibung }}</p>
+            <div class="flex items-end justify-between">
               <span class="text-gray-500 line-through bg-gray-400 p-3 text-white rounded">{{ element.Preis }}</span>
               <span class="text-red-500 font-semibold bg-red-200 p-3 rounded ">neuer Preis:
                 <span class="text-red-500 text-2xl">
@@ -42,7 +41,7 @@
 </template>
   
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch , onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import draggable from 'vuedraggable';
 import axios from 'axios';
@@ -77,6 +76,9 @@ const currentPageData = computed({
     cards.value.splice(startIndex, itemsPerPage, ...value);
   },
 });
+onMounted(() => {
+  fetchWatchlist();
+})
 
 watch(currentPage, () => {
   currentPageData.value = currentPageData.value;
@@ -86,8 +88,18 @@ const onClickHandler = (page) => {
   currentPage.value = page;
 };
 
-const addToWatchList = (item) => {
+const fetchWatchlist = () => {
+    axios.get('api/watchlistData')
+        .then(response => {
+            console.log(response)
+            page.props.watchlistData = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
 
+const addToWatchList = (item) => {
   axios.post('/watchList', {
     id: item.id,
     name: item.Produktname,
@@ -95,7 +107,7 @@ const addToWatchList = (item) => {
     image: item.image_url,
   })
     .then((response) => {
-      console.log(response);
+      fetchWatchlist();
 
     }, (error) => {
       console.log(error);
