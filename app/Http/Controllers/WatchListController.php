@@ -36,6 +36,12 @@ class WatchListController extends Controller
             'price' => 'required|string|max:10',
         ]);
 
+        //if product_id is already in watchlist, don't add it again
+        if (WatchList::where('product_id', $validated['id'])->exists()) {
+            session()->flash('message', 'Product already in watchlist');
+            return redirect()->back();
+        }
+        
         WatchList::create(
             [
                 'product_id' => $validated['id'],
@@ -46,6 +52,7 @@ class WatchListController extends Controller
         );
         
         session()->flash('message', 'Product added to watchlist');
+
         return redirect()->back();
     }
 
