@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('watchlists', function (Blueprint $table) {
             $table->id();
-            $table->string('Produktname');
-            $table->string('Produktbeschreibung');
-            $table->string('Preis');
-            $table->string('Angebot_in_prozent')->nullable()->default('0');
-            $table->date('Angebotsdatum')->format('yyyy-mm-dd')->nullable();
-            $table->string('image_url')->nullable();
+            $table->foreignId('product_id');
+            $table->string('image');
+            $table->string('name');
+            $table->string('price');
             $table->timestamps();
         });
     }

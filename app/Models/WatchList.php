@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class WatchList extends Model
 {
     use HasFactory;    
+
+    protected $table = 'watchlists';
     protected $fillable = [
-        'Produktname',
-        'Produktbeschreibung',
-        'Preis',
-        'Angebot_in_prozent',
-        'Angebotsdatum',
-        'image_url',
+        'product_id',
+        'name',
+        'image',
+        'price',
     ];
 }

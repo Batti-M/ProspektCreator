@@ -12,7 +12,7 @@ class WatchListController extends Controller
      */
     public function index()
     {
-        //
+        return WatchList::all();
     }
 
     /**
@@ -28,7 +28,25 @@ class WatchListController extends Controller
      */
     public function store(Request $request)
     {
-        return "watchlist store";
+        // dd($request->all());
+        $validated = $request->validate([
+            'id' => 'required|numeric|digits_between:1,5',
+            'image' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'price' => 'required|string|max:10',
+        ]);
+
+        WatchList::create(
+            [
+                'product_id' => $validated['id'],
+                'image' => $validated['image'],
+                'name' => $validated['name'],
+                'price' => $validated['price'],
+            ]
+        );
+        session(['watchListData' => WatchList::all()]);
+        session()->flash('message', 'Product added to watchlist');
+        return redirect()->back();
     }
 
     /**

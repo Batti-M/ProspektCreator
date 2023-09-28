@@ -2,8 +2,8 @@
   <div class=" bg-blue-300 m-10 p-10">
     <TransitionGroup>
 
-      <draggable v-model="currentPageData" group="productGroup"
-       v-bind="dragOptions" class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-6 h-auto" @start="drag = true"
+      <draggable v-model="currentPageData" group="productGroup" v-bind="dragOptions"
+        class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 p-6 h-auto" @start="drag = true"
         @end="drag = false">
         <template #item="{ element, index }">
           <div @click="addToWatchList(element)" :itemKey="element.id"
@@ -17,9 +17,11 @@
               the product offers.</p>
             <div class="flex items-end justify-end gap-10">
               <span class="text-gray-500 line-through bg-gray-400 p-3 text-white rounded">{{ element.Preis }}</span>
-              <span class="text-red-500 font-semibold bg-red-200 p-3 rounded ">neuer Preis: <span
-                  class="text-red-500 text-2xl">{{ (element.Preis -
-                    (element.Preis * element.Angebot_in_prozent / 100)).toFixed(2) }}€</span></span>
+              <span class="text-red-500 font-semibold bg-red-200 p-3 rounded ">neuer Preis:
+                <span class="text-red-500 text-2xl">
+                  {{ (element.Preis - (element.Preis * element.Angebot_in_prozent / 100)).toFixed(2) }}€
+                </span>
+              </span>
               <div class="text-sm bg-green-200 text-green-800 p-3 rounded">{{ element.Angebot_in_prozent }}% reduziert
               </div>
             </div>
@@ -29,14 +31,15 @@
       </draggable>
     </TransitionGroup>
 
-    <vue-awesome-paginate :total-items="cards.length" :items-per-page="7" v-model="currentPage" :on-click="onClickHandler">
+    <vue-awesome-paginate :total-items="cards.length" :items-per-page="7" v-model="currentPage"
+      :on-click="onClickHandler">
     </vue-awesome-paginate>
   </div>
 </template>
   
 <script setup>
 import { ref, computed, watch } from 'vue';
-import {  usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import draggable from 'vuedraggable';
 import axios from 'axios';
 
@@ -89,7 +92,7 @@ const addToWatchList = (item) => {
   })
     .then((response) => {
       console.log(response);
-      
+
     }, (error) => {
       console.log(error);
     });

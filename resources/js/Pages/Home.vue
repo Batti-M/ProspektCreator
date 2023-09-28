@@ -19,14 +19,11 @@ defineProps({
 
 <template>
     <div class="bg-gray-900 flex flex-col justify-center items-center min-h-screen">
-         <h1 class="text-2xl text-white bg-gray-900 mb-10">Welcome to my prospektCreator</h1>
-
-         <CsvUpload />
-         <ProductsTable :csvData="csvData" :headers="headers" :rows="rows" /> 
+        <h1 class="text-2xl text-white bg-gray-900 mb-10">Welcome to my prospektCreator</h1>
+       
+        <CsvUpload />
+        <ProductsTable :csvData="csvData" :headers="headers" :rows="rows" />
     </div>
 </template>
 
-<style>
-
-
-</style>
+<style></style>
