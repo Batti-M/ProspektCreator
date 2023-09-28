@@ -40,8 +40,8 @@ class WatchListController extends Controller
         if (WatchList::where('product_id', $validated['id'])->exists()) {
             session()->flash('message', 'Product already in watchlist');
             return redirect()->back();
-        }
-        
+        } //todo: display flash message
+
         WatchList::create(
             [
                 'product_id' => $validated['id'],
