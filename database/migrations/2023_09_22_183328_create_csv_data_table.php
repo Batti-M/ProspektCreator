@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Produktbeschreibung');
             $table->string('Preis');
             $table->string('Angebot_in_prozent')->nullable()->default('0');
-            $table->date('Angebotsdatum')->format('d.m.Y');
+            $table->date('Angebotsdatum')->format('dd.mm.yyyy')->nullable();
             $table->string('image_url')->nullable();
             $table->timestamps();
         });

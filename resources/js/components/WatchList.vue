@@ -44,6 +44,7 @@ onMounted(() => {
            
 
 watch(watchlist.value, (newValue, oldValue) => {
+    newValue = fetchWatchlist();
     watchlist.value = newValue;
 })
 
